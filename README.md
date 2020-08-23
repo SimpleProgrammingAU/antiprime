@@ -1,12 +1,12 @@
 # antiprime
 
-[![Build Status](https://travis-ci.org/SimpleProgrammingAU/nihon-numbers.svg?branch=master)](https://travis-ci.org/SimpleProgrammingAU/nihon-numbers)
-[![Coverage Status](https://coveralls.io/repos/github/SimpleProgrammingAU/nihon-numbers/badge.svg?branch=master)](https://coveralls.io/github/SimpleProgrammingAU/nihon-numbers?branch=master)
+[![Build Status](https://travis-ci.org/SimpleProgrammingAU/antiprime.svg?branch=master)](https://travis-ci.org/SimpleProgrammingAU/antiprime)
+[![Coverage Status](https://coveralls.io/repos/github/SimpleProgrammingAU/antiprime/badge.svg?branch=master)](https://coveralls.io/github/SimpleProgrammingAU/antiprime?branch=master)
 ![GitHub issues](https://img.shields.io/github/issues/SimpleProgrammingAU/antiprime)
-![NPM Licence](https://img.shields.io/npm/l/nihon-numbers)
-![npm bundle size](https://img.shields.io/bundlephobia/min/nihon-numbers)
-![npm total downloads](https://img.shields.io/npm/dt/nihon-numbers)
-![npm version](https://img.shields.io/npm/v/nihon-numbers)
+![NPM Licence](https://img.shields.io/npm/l/antiprime)
+![npm bundle size](https://img.shields.io/bundlephobia/min/antiprime)
+![npm total downloads](https://img.shields.io/npm/dt/antiprime)
+![npm version](https://img.shields.io/npm/v/antiprime)
 
 Because sometimes we want [highly composite numbers](https://en.wikipedia.org/wiki/Highly_composite_number).
 
