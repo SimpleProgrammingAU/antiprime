@@ -7,3 +7,4 @@ lib/index.js
 *.yml
 package-lock.json
 tsconfig.json
+webpack.config.js
