@@ -1,6 +1,6 @@
 {
   "name": "antiprime",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Because sometimes we need highly composite numbers",
   "main": "./lib/index.min.js",
   "type": "commonjs",
