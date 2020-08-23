@@ -1,0 +1,47 @@
+{
+  "name": "antiprime",
+  "version": "1.0.0",
+  "description": "Because sometimes we need highly composite numbers",
+  "main": "./lib/index.min.js",
+  "type": "commonjs",
+  "types": "./lib/index.d.ts",
+  "scripts": {
+    "clean": "shx rm -rf lib/*",
+    "build": "tsc && npm run minify",
+    "watch": "tsc --watch",
+    "test": "nyc mocha lib/*.test.js -R spec -u tdd",
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "prepack": "npm run clean && npm run build",
+    "minify": "uglifyjs --compress --mangle --output lib/index.min.js -- lib/index.js"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@types/mocha": "^8.0.3",
+    "@types/node": "^14.6.0",
+    "coveralls": "^3.1.0",
+    "mocha": "^8.1.1",
+    "mocha-lcov-reporter": "^1.3.0",
+    "nyc": "^15.1.0",
+    "shx": "^0.3.2",
+    "typescript": "^4.0.2",
+    "uglify-es": "^3.3.9"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SimpleProgrammingAU/antiprime.git"
+  },
+  "keywords": [
+    "math",
+    "composite",
+    "prime",
+    "numbers",
+    "antiprime",
+    "numberphile"
+  ],
+  "author": "Simple Programming",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/SimpleProgrammingAU/antiprime/issues"
+  },
+  "homepage": "https://github.com/SimpleProgrammingAU/antiprime#readme"
+}

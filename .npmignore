@@ -1,0 +1,9 @@
+.nyc_output
+coverage
+src
+lib/*.map
+lib/*.test.*
+lib/index.js
+*.yml
+package-lock.json
+tsconfig.json

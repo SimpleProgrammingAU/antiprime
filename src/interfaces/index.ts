@@ -1,0 +1,1 @@
+export { default as PrimeFactor } from './PrimeFactor';
