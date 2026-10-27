@@ -4,7 +4,7 @@
  * @returns `true` if the input number is prime; `false` otherwise
  * @throws `TypeError` if the input is not a number
  */
-const isPrime = (n: number): boolean => {
+export function isPrime(n: number): boolean {
   if (typeof n !== "number") throw new TypeError("input must be a number");
   if (n < 0) n *= -1;
   if ((n >= 0 && n <= 1) || n % 1 !== 0) return false;
@@ -13,6 +13,4 @@ const isPrime = (n: number): boolean => {
     if (n % i === 0) return false;
   }
   return true;
-};
-
-export default isPrime;
+}

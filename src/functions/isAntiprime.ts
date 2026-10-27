@@ -1,5 +1,8 @@
-import { factors, primeFactors, isPrime, isAntiprimeCandidate } from ".";
 import type { PrimeFactor } from "../interfaces";
+import { factors } from "./factors";
+import { isAntiprimeCandidate } from "./isAntiprimeCandidate";
+import { isPrime } from "./isPrime";
+import { primeFactors } from "./primeFactors";
 
 /**
  * Determines if the input number is highly composite.
@@ -8,12 +11,12 @@ import type { PrimeFactor } from "../interfaces";
  * @returns `true` if the number is highly composite; `false` otherwise
  * @throws `TypeError` if the input `n` is not an integer other than zero or `pf` is not an array of PrimeFactor objects (if supplied)
  */
-const isAntiprime = (n: number, pf?: PrimeFactor[]): boolean => {
+export function isAntiprime(n: number, pf?: PrimeFactor[]): boolean {
   if (typeof n !== "number") throw new TypeError("input must be a number");
   if (n < 0) n *= -1;
   if (n > 2 && isPrime(n)) return false;
   else if (n <= 2 && n !== 0) return true;
-  if (pf === undefined) pf = primeFactors(n);
+  pf ??= primeFactors(n);
   if (!isAntiprimeCandidate(n, pf)) return false;
   let prevCandidate = n - 1;
   while (prevCandidate > 1) {
@@ -22,6 +25,4 @@ const isAntiprime = (n: number, pf?: PrimeFactor[]): boolean => {
     else if (prevCandidate > 1) prevCandidate--;
   }
   return true;
-};
-
-export default isAntiprime;
+}

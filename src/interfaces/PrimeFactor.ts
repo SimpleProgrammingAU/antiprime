@@ -1,7 +1,7 @@
 /**
  * A prime number that devides into a composite number with no remainder.
  */
-interface PrimeFactor {
+export interface PrimeFactor {
   /**
    * The prime factor
    */
@@ -11,5 +11,3 @@ interface PrimeFactor {
    */
   exponent: number;
 }
-
-export default PrimeFactor;

@@ -1,4 +1,4 @@
-import { isPrime } from ".";
+import { isPrime } from "./isPrime";
 
 /**
  * Determines the next largest prime number based on the input number.
@@ -6,14 +6,12 @@ import { isPrime } from ".";
  * @returns the next largest prime number; if the input is negative it returns the next prime of larger magnitude
  * @throws `TypeError` if the input is not a number
  */
-const nextPrime = (n: number): number => {
+export function nextPrime(n: number): number {
   if (typeof n !== "number") throw new TypeError("input must be a number");
   if (n < 0) n *= -1;
   if (n % 1 !== 0) n = Math.floor(n);
   if (n < 2) return 2;
-  n % 2 === 0 ? n++ : (n += 2);
+  n += n % 2 === 0 ? 1 : 2;
   while (!isPrime(n)) n += 2;
   return n;
-};
-
-export default nextPrime;
+}

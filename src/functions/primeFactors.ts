@@ -1,5 +1,5 @@
 import type { PrimeFactor } from "../interfaces";
-import { isPrime } from ".";
+import { isPrime } from "./isPrime";
 
 /**
  * Finds all prime factors and their exponents for a given input number
@@ -8,7 +8,7 @@ import { isPrime } from ".";
  * @throws `RangeError` when the input is not an integer value not equal to zero
  * @throws `TypeError` when the input is not an number value
  */
-const primeFactors = (n: number): PrimeFactor[] => {
+export function primeFactors(n: number): PrimeFactor[] {
   if (typeof n !== "number" || n === 0) throw new TypeError("Input number must be an integer not equal to zero.");
   if (n % 1 !== 0) throw new RangeError("Input number must be an integer.");
   if (n < 0) n *= -1;
@@ -16,15 +16,12 @@ const primeFactors = (n: number): PrimeFactor[] => {
   if (isPrime(n)) return [{ factor: n, exponent: 1 }];
   const primes: PrimeFactor[] = [];
   for (let i = 2; i <= n; i++) {
-    if (n % i === 0) {
-      primes.push({ factor: i, exponent: 0 });
-    }
-    while (n > 1 && n % i === 0) {
-      primes[primes.length - 1].exponent++;
+    let exponent = 0;
+    while (n % i === 0) {
+      exponent++;
       n /= i;
     }
+    if (exponent > 0) primes.push({ factor: i, exponent });
   }
   return primes;
-};
-
-export default primeFactors;
+}
