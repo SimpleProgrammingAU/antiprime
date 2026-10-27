@@ -1,5 +1,5 @@
 import { factors, primeFactors, isPrime, isAntiprimeCandidate } from ".";
-import { PrimeFactor } from "../interfaces";
+import type { PrimeFactor } from "../interfaces";
 
 /**
  * Determines if the input number is highly composite.

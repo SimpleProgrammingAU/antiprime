@@ -1,4 +1,4 @@
-import { PrimeFactor } from "../interfaces";
+import type { PrimeFactor } from "../interfaces";
 import { isAntiprime, factors, primeFactors } from "../functions";
 
 /**
@@ -24,7 +24,7 @@ class Antiprime {
     this._primeFactors = primeFactors(n);
   }
 
-  get value() {
+  get value(): number {
     return this._value;
   }
 

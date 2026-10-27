@@ -11,7 +11,7 @@ import {
   nextPrime,
   primeFactors,
 } from "./";
-import { PrimeFactor } from "./interfaces";
+import type { PrimeFactor } from "./interfaces";
 import { isAntiprimeCandidate } from "./functions";
 
 test("factors(n)", () => {

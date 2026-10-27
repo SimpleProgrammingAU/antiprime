@@ -1,5 +1,5 @@
 import { isConsecutivePrimeFactors, isPrimeExponentsReducing, primeFactors, isPrime } from ".";
-import { PrimeFactor } from "../interfaces";
+import type { PrimeFactor } from "../interfaces";
 
 /**
  * Determines if the input number is a candidate for a highly composite integer.

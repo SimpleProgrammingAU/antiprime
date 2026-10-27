@@ -1,4 +1,4 @@
-import { PrimeFactor } from "../interfaces";
+import type { PrimeFactor } from "../interfaces";
 
 /**
  * Determines if the condition of reducing prime exponents is met.

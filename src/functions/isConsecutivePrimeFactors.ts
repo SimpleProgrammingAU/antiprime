@@ -1,4 +1,4 @@
-import { PrimeFactor } from "../interfaces";
+import type { PrimeFactor } from "../interfaces";
 import { nextPrime } from ".";
 
 /**

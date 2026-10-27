@@ -1,1 +1,1 @@
-export { default as PrimeFactor } from './PrimeFactor';
+export type { default as PrimeFactor } from './PrimeFactor';
