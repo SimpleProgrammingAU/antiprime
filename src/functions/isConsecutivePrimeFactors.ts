@@ -14,7 +14,8 @@ const isConsecutivePrimeFactors = (primeFactors: PrimeFactor[]): boolean => {
     if (typeof primeFactor.exponent !== "number" || typeof primeFactor.factor !== "number")
       throw new TypeError("Input array values must include factor and exponent values");
     if (i === 0 && primeFactor.factor !== 2) isConsecutivePrimeFactors = false;
-    if (i > 0 && isConsecutivePrimeFactors) isConsecutivePrimeFactors = primeFactor.factor === nextPrime(arr[i - 1].factor);
+    if (i > 0 && isConsecutivePrimeFactors)
+      isConsecutivePrimeFactors = primeFactor.factor === nextPrime(arr[i - 1].factor);
   });
   return isConsecutivePrimeFactors;
 };

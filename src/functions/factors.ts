@@ -6,7 +6,7 @@
  * @throws `TypeError` when the input is not an number value
  */
 const factors = (n: number): number[] => {
-  if (typeof n !== 'number') throw new TypeError("Input number must be an integer.");
+  if (typeof n !== "number") throw new TypeError("Input number must be an integer.");
   if (n % 1 !== 0) throw new RangeError("Input number must be an integer.");
   if (n < 0) n *= -1;
   const factors: number[] = [];

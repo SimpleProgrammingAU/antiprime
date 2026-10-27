@@ -15,7 +15,9 @@
     "build": "tsdown",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "test:coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "repository": {
     "type": "git",
@@ -39,6 +41,7 @@
     "@arethetypeswrong/core": "^0.18.5",
     "@types/node": "^26.6.5",
     "@vitest/coverage-v8": "^5.0.5",
+    "prettier": "^3.9.10",
     "publint": "^0.3.25",
     "tsdown": "^0.23.2",
     "typescript": "~6.0.3",

@@ -5,11 +5,11 @@ interface PrimeFactor {
   /**
    * The prime factor
    */
-  factor:number;
+  factor: number;
   /**
    * The number of times the factor divdes into the composite number
    */
-  exponent:number;
+  exponent: number;
 }
 
 export default PrimeFactor;
