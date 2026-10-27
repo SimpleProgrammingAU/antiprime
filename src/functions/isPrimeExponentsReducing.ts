@@ -5,10 +5,10 @@ import { assertPrimeFactorisation } from "../internal/assertPrimeFactorisation";
  * Determines whether the exponents of a prime factorisation never increase from smaller to larger primes.
  * @remarks
  * This is one of the tests every antiprime candidate passes. The empty factorisation of 1 passes trivially.
- * @param primeFactors - A prime factorisation, such as the result of {@link primeFactors}.
+ * @param pf - A prime factorisation, such as the result of {@link primeFactors}.
  * @returns `true` if each exponent is no larger than the one before it; otherwise `false`.
- * @throws `TypeError` If `primeFactors` is not an array of objects with numeric `factor` and `exponent` properties.
- * @throws `RangeError` If `primeFactors` is not a prime factorisation: ascending distinct primes with positive integer exponents.
+ * @throws `TypeError` If `pf` is not an array of objects with numeric `factor` and `exponent` properties.
+ * @throws `RangeError` If `pf` is not a prime factorisation: ascending distinct primes with positive integer exponents.
  * @since 1.0.0
  * @example
  * ```ts
@@ -16,10 +16,10 @@ import { assertPrimeFactorisation } from "../internal/assertPrimeFactorisation";
  * isPrimeExponentsReducing(primeFactors(18)); // false: 2 × 3²
  * ```
  */
-export function isPrimeExponentsReducing(primeFactors: readonly PrimeFactor[]): boolean {
-  assertPrimeFactorisation(primeFactors);
+export function isPrimeExponentsReducing(pf: readonly PrimeFactor[]): boolean {
+  assertPrimeFactorisation(pf);
   let previous = Infinity;
-  for (const { exponent } of primeFactors) {
+  for (const { exponent } of pf) {
     if (exponent > previous) return false;
     previous = exponent;
   }

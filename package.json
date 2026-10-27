@@ -1,6 +1,6 @@
 {
   "name": "antiprime",
-  "version": "1.0.6",
+  "version": "2.0.0",
   "description": "Because sometimes we need highly composite numbers",
   "type": "module",
   "files": [
@@ -19,7 +19,9 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "lint": "eslint --max-warnings 0 .",
-    "lint:fix": "eslint --fix ."
+    "lint:fix": "eslint --fix .",
+    "docs:build": "typedoc",
+    "prepublishOnly": "pnpm format:check && pnpm lint && pnpm typecheck && pnpm test:coverage && pnpm build"
   },
   "repository": {
     "type": "git",
@@ -52,6 +54,7 @@
     "prettier": "^3.9.10",
     "publint": "^0.3.25",
     "tsdown": "^0.23.2",
+    "typedoc": "^0.28.20",
     "typescript": "~6.0.3",
     "typescript-eslint": "^8.72.0",
     "vitest": "^5.0.5"
