@@ -1,3 +1,7 @@
+# lefthook installs its git hooks through the `prepare` script instead of a postinstall script.
+allowBuilds:
+  lefthook: false
+
 minimumReleaseAge: 1440
 
 overrides:

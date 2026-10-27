@@ -21,7 +21,8 @@
     "lint": "eslint --max-warnings 0 .",
     "lint:fix": "eslint --fix .",
     "docs:build": "typedoc",
-    "prepublishOnly": "pnpm format:check && pnpm lint && pnpm typecheck && pnpm test:coverage && pnpm build"
+    "prepublishOnly": "pnpm format:check && pnpm lint && pnpm typecheck && pnpm test:coverage && pnpm build",
+    "prepare": "lefthook install"
   },
   "repository": {
     "type": "git",
@@ -51,6 +52,7 @@
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-jsdoc": "^65.4.2",
     "eslint-plugin-tsdoc": "^0.5.4",
+    "lefthook": "^2.2.2",
     "prettier": "^3.9.10",
     "publint": "^0.3.25",
     "tsdown": "^0.23.2",
