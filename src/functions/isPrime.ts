@@ -1,10 +1,20 @@
 import { assertSafeNumber } from "../internal/assertNumber";
 
 /**
- * Determines if the input number is prime.
- * @param n the input number to be assessed
- * @returns `true` if the input number is prime; `false` otherwise
- * @throws `TypeError` if the input is not a number
+ * Determines whether a number is prime.
+ * @remarks
+ * Negative numbers are judged by their absolute value. Non-integers are never prime.
+ * @param n - A number within the safe integer range.
+ * @returns `true` if the absolute value of `n` is prime; otherwise `false`.
+ * @throws `TypeError` If `n` is not a number.
+ * @throws `RangeError` If `n` is NaN, infinite, or larger in magnitude than `Number.MAX_SAFE_INTEGER`.
+ * @since 1.0.0
+ * @example
+ * ```ts
+ * isPrime(97); // true
+ * isPrime(-7); // true
+ * isPrime(10.5); // false
+ * ```
  */
 export function isPrime(n: number): boolean {
   assertSafeNumber(n);
