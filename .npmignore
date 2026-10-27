@@ -7,3 +7,6 @@ lib/index.js
 *.yml
 package-lock.json
 tsconfig.json
+CLAUDE.md
+GLOSSARY.md
+docs/
