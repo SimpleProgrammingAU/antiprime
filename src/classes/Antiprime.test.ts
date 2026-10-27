@@ -1,7 +1,48 @@
 import { describe, expect, it } from "vitest";
+import { FIRST_ANTIPRIMES } from "../testing/antiprimeFixtures";
 import { Antiprime } from ".";
 
 describe("Antiprime", () => {
+  it("walks forwards through the OEIS antiprimes", () => {
+    let ap = new Antiprime(1);
+    const seen = [ap.value];
+    while (seen.length < FIRST_ANTIPRIMES.length) {
+      ap = ap.nextAntiprime();
+      seen.push(ap.value);
+    }
+    expect(seen).toEqual(FIRST_ANTIPRIMES);
+  });
+
+  it("walks backwards through the OEIS antiprimes", () => {
+    let ap = new Antiprime(2162161);
+    const seen: number[] = [];
+    while (ap.value > 1) {
+      ap = ap.previousAntiprime();
+      seen.push(ap.value);
+    }
+    expect(seen).toEqual([...FIRST_ANTIPRIMES].reverse());
+  });
+
+  it("finds the antiprime after 720720", () => {
+    expect(new Antiprime(720720).nextAntiprime().value).toBe(1081080);
+  });
+
+  it("throws RangeError when the next antiprime is beyond the safe integer range", () => {
+    expect(() => new Antiprime(Number.MAX_SAFE_INTEGER).nextAntiprime()).toThrow(RangeError);
+  });
+
+  it.each([
+    [1, 1],
+    [2, 2],
+    [12, 6],
+    [-36, 9],
+    [97, 2],
+    [5040, 60],
+    [2162160, 320],
+  ])("new Antiprime(%d).factorCount is %d", (n, expected) => {
+    expect(new Antiprime(n).factorCount).toBe(expected);
+  });
+
   it("handles a negative non-antiprime (-10)", () => {
     const ap = new Antiprime(-10);
     expect(ap.value).toBe(10);

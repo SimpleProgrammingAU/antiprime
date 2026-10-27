@@ -40,6 +40,21 @@ describe("primeFactors", () => {
         { factor: 5, exponent: 2 },
       ],
     ],
+    [
+      194,
+      [
+        { factor: 2, exponent: 1 },
+        { factor: 97, exponent: 1 },
+      ],
+    ],
+    [
+      Number.MAX_SAFE_INTEGER,
+      [
+        { factor: 6361, exponent: 1 },
+        { factor: 69431, exponent: 1 },
+        { factor: 20394401, exponent: 1 },
+      ],
+    ],
   ])("primeFactors(%d) is %j", (n, expected) => {
     expect(primeFactors(n)).toEqual(expected);
   });

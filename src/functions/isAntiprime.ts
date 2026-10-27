@@ -1,9 +1,7 @@
 import type { PrimeFactor } from "../interfaces";
+import { antiprimesUpTo } from "../internal/antiprimes";
 import { assertNonZeroSafeInteger } from "../internal/assertNumber";
-import { assertPrimeFactorisationOf } from "../internal/assertPrimeFactorisation";
-import { factors } from "./factors";
 import { isAntiprimeCandidate } from "./isAntiprimeCandidate";
-import { primeFactors } from "./primeFactors";
 
 /**
  * Determines if the input number is highly composite.
@@ -15,14 +13,6 @@ import { primeFactors } from "./primeFactors";
 export function isAntiprime(n: number, pf?: readonly PrimeFactor[]): boolean {
   assertNonZeroSafeInteger(n);
   n = Math.abs(n);
-  if (pf === undefined) pf = primeFactors(n);
-  else assertPrimeFactorisationOf(pf, n);
   if (!isAntiprimeCandidate(n, pf)) return false;
-  let prevCandidate = n - 1;
-  while (prevCandidate > 1) {
-    while (!isAntiprimeCandidate(prevCandidate) && prevCandidate > 1) prevCandidate--;
-    if (factors(n).length <= factors(prevCandidate).length) return false;
-    else if (prevCandidate > 1) prevCandidate--;
-  }
-  return true;
+  return antiprimesUpTo(n).at(-1) === n;
 }

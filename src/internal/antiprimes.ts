@@ -1,0 +1,47 @@
+import { nextPrime } from "../functions/nextPrime";
+
+/** An antiprime candidate together with its factor count. */
+interface Candidate {
+  /** The candidate itself. */
+  readonly value: number;
+  /** How many factors the candidate has. */
+  readonly factorCount: number;
+}
+
+/**
+ * Lists every antiprime candidate up to `limit`, in ascending order.
+ * @param limit - The largest value to include; at most `Number.MAX_SAFE_INTEGER`.
+ * @returns The candidates, each with its factor count.
+ */
+export function candidatesUpTo(limit: number): Candidate[] {
+  if (limit < 1) return [];
+  const candidates: Candidate[] = [{ value: 1, factorCount: 1 }];
+  const visit = (value: number, prime: number, maxExponent: number, count: number): void => {
+    let power = value;
+    for (let exponent = 1; exponent <= maxExponent; exponent++) {
+      power *= prime;
+      if (power > limit) return;
+      const factorCount = count * (exponent + 1);
+      if (exponent === 1 || power === 4 || power === 36) candidates.push({ value: power, factorCount });
+      visit(power, nextPrime(prime), exponent, factorCount);
+    }
+  };
+  visit(1, 2, Infinity, 1);
+  return candidates.sort((a, b) => a.value - b.value);
+}
+
+/**
+ * Lists every antiprime up to `limit`, in ascending order.
+ * @param limit - The largest value to include; at most `Number.MAX_SAFE_INTEGER`.
+ * @returns The antiprimes.
+ */
+export function antiprimesUpTo(limit: number): number[] {
+  const antiprimes: number[] = [];
+  let best = 0;
+  for (const { value, factorCount } of candidatesUpTo(limit)) {
+    if (factorCount <= best) continue;
+    best = factorCount;
+    antiprimes.push(value);
+  }
+  return antiprimes;
+}

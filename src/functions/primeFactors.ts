@@ -1,6 +1,5 @@
 import type { PrimeFactor } from "../interfaces";
 import { assertNonZeroSafeInteger } from "../internal/assertNumber";
-import { isPrime } from "./isPrime";
 
 /**
  * Finds all prime factors and their exponents for a given input number
@@ -12,15 +11,15 @@ import { isPrime } from "./isPrime";
 export function primeFactors(n: number): PrimeFactor[] {
   assertNonZeroSafeInteger(n);
   n = Math.abs(n);
-  if (isPrime(n)) return [{ factor: n, exponent: 1 }];
-  const primes: PrimeFactor[] = [];
-  for (let i = 2; i <= n; i++) {
+  const result: PrimeFactor[] = [];
+  for (let factor = 2; factor * factor <= n; factor += factor === 2 ? 1 : 2) {
     let exponent = 0;
-    while (n % i === 0) {
+    while (n % factor === 0) {
+      n /= factor;
       exponent++;
-      n /= i;
     }
-    if (exponent > 0) primes.push({ factor: i, exponent });
+    if (exponent > 0) result.push({ factor, exponent });
   }
-  return primes;
+  if (n > 1) result.push({ factor: n, exponent: 1 });
+  return result;
 }
