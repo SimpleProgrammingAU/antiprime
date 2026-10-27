@@ -1,4 +1,5 @@
 import type { PrimeFactor } from "../interfaces";
+import { assertNonZeroSafeInteger } from "../internal/assertNumber";
 import { isPrime } from "./isPrime";
 
 /**
@@ -9,10 +10,8 @@ import { isPrime } from "./isPrime";
  * @throws `TypeError` when the input is not an number value
  */
 export function primeFactors(n: number): PrimeFactor[] {
-  if (typeof n !== "number" || n === 0) throw new TypeError("Input number must be an integer not equal to zero.");
-  if (n % 1 !== 0) throw new RangeError("Input number must be an integer.");
-  if (n < 0) n *= -1;
-  if (n === 1) return [{ factor: 2, exponent: 0 }];
+  assertNonZeroSafeInteger(n);
+  n = Math.abs(n);
   if (isPrime(n)) return [{ factor: n, exponent: 1 }];
   const primes: PrimeFactor[] = [];
   for (let i = 2; i <= n; i++) {

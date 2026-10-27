@@ -1,3 +1,5 @@
+import { assertNonZeroSafeInteger } from "../internal/assertNumber";
+
 /**
  * Finds all factors of the input number
  * @param n the integer to factorise
@@ -6,9 +8,8 @@
  * @throws `TypeError` when the input is not an number value
  */
 export function factors(n: number): number[] {
-  if (typeof n !== "number") throw new TypeError("Input number must be an integer.");
-  if (n % 1 !== 0) throw new RangeError("Input number must be an integer.");
-  if (n < 0) n *= -1;
+  assertNonZeroSafeInteger(n);
+  n = Math.abs(n);
   const result: number[] = [];
   for (let i = 1; i <= n / 2; i++) {
     if (n % i === 0) result.push(i);

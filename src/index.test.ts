@@ -1,4 +1,5 @@
 import { describe, expect, it } from "vitest";
+import type { PrimeFactor } from ".";
 import * as antiprime from ".";
 
 describe("public API", () => {
@@ -21,5 +22,10 @@ describe("public API", () => {
   it("exports the highly composite names as aliases", () => {
     expect(antiprime.HighlyCompositeNumber).toBe(antiprime.Antiprime);
     expect(antiprime.isHighlyComposite).toBe(antiprime.isAntiprime);
+  });
+
+  it("exports the PrimeFactor type", () => {
+    const primeFactors: PrimeFactor[] = [{ factor: 2, exponent: 1 }];
+    expect(antiprime.isPrimeExponentsReducing(primeFactors)).toBe(true);
   });
 });

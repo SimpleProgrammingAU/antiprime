@@ -11,10 +11,22 @@ describe("isPrimeExponentsReducing", () => {
     expect(isPrimeExponentsReducing(primeFactors(n))).toBe(false);
   });
 
-  it.each([0, { exponent: 1, factor: 2 }, [{ exponent: "a", factor: "b" }], [{ exponent: 1 }], "abc", undefined])(
-    "throws TypeError for %j",
+  it.each([
+    0,
+    { exponent: 1, factor: 2 },
+    [{ exponent: "a", factor: "b" }],
+    [{ exponent: 1 }],
+    [null],
+    "abc",
+    undefined,
+  ])("throws TypeError for %j", (input) => {
+    expect(() => isPrimeExponentsReducing(input as unknown as PrimeFactor[])).toThrow(TypeError);
+  });
+
+  it.each([[[{ factor: 2, exponent: 0 }]], [[{ factor: 9, exponent: 1 }]]])(
+    "throws RangeError for the invalid prime factorisation %j",
     (input) => {
-      expect(() => isPrimeExponentsReducing(input as unknown as PrimeFactor[])).toThrow(TypeError);
+      expect(() => isPrimeExponentsReducing(input)).toThrow(RangeError);
     },
   );
 });

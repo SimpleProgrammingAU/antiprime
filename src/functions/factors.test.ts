@@ -3,7 +3,6 @@ import { factors } from ".";
 
 describe("factors", () => {
   it.each([
-    [0, [0]],
     [1, [1]],
     [2, [1, 2]],
     [3, [1, 3]],
@@ -21,8 +20,8 @@ describe("factors", () => {
     expect(factors(n)).toEqual(expected);
   });
 
-  it("throws RangeError for a non-integer", () => {
-    expect(() => factors(1.1)).toThrow(RangeError);
+  it.each([0, 1.1, NaN, Infinity, -Infinity, 2 ** 53])("throws RangeError for %d", (n) => {
+    expect(() => factors(n)).toThrow(RangeError);
   });
 
   it.each(["abc", "1"])("throws TypeError for the string %j", (n) => {

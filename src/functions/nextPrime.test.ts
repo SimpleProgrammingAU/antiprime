@@ -25,6 +25,14 @@ describe("nextPrime", () => {
     expect(nextPrime(n)).toBe(expected);
   });
 
+  it.each([NaN, Infinity, -Infinity, 2 ** 53])("throws RangeError for %d", (n) => {
+    expect(() => nextPrime(n)).toThrow(RangeError);
+  });
+
+  it("throws RangeError when the next prime is beyond the safe integer range", () => {
+    expect(() => nextPrime(Number.MAX_SAFE_INTEGER)).toThrow(RangeError);
+  });
+
   it.each(["abc", "1"])("throws TypeError for the string %j", (n) => {
     expect(() => nextPrime(n as unknown as number)).toThrow(TypeError);
   });

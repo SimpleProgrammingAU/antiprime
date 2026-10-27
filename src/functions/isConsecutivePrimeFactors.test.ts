@@ -11,10 +11,35 @@ describe("isConsecutivePrimeFactors", () => {
     expect(isConsecutivePrimeFactors(primeFactors(n))).toBe(false);
   });
 
-  it.each([0, { exponent: 1, factor: 2 }, [{ exponent: "a", factor: "b" }], [{ exponent: 1 }], "abc", undefined])(
-    "throws TypeError for %j",
-    (input) => {
-      expect(() => isConsecutivePrimeFactors(input as unknown as PrimeFactor[])).toThrow(TypeError);
-    },
-  );
+  it.each([
+    0,
+    { exponent: 1, factor: 2 },
+    [{ exponent: "a", factor: "b" }],
+    [{ exponent: 1 }],
+    [null],
+    "abc",
+    undefined,
+  ])("throws TypeError for %j", (input) => {
+    expect(() => isConsecutivePrimeFactors(input as unknown as PrimeFactor[])).toThrow(TypeError);
+  });
+
+  it.each([
+    [[{ factor: 2, exponent: 0 }]],
+    [[{ factor: 2, exponent: 1.5 }]],
+    [[{ factor: 4, exponent: 1 }]],
+    [
+      [
+        { factor: 3, exponent: 1 },
+        { factor: 2, exponent: 1 },
+      ],
+    ],
+    [
+      [
+        { factor: 2, exponent: 1 },
+        { factor: 2, exponent: 1 },
+      ],
+    ],
+  ])("throws RangeError for the invalid prime factorisation %j", (input) => {
+    expect(() => isConsecutivePrimeFactors(input)).toThrow(RangeError);
+  });
 });

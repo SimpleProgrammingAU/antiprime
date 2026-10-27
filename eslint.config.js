@@ -18,6 +18,7 @@ export default defineConfig(
     },
     rules: {
       "@typescript-eslint/explicit-module-boundary-types": "error",
+      "@typescript-eslint/restrict-template-expressions": ["error", { allowNumber: true }],
     },
   },
   {

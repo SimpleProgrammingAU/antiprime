@@ -30,10 +30,25 @@ describe("Antiprime", () => {
   it("handles 1", () => {
     const ap = new Antiprime(1);
     expect(ap.nextAntiprime().value).toBe(2);
-    expect(() => ap.previousAntiprime()).toThrow();
+    expect(() => ap.previousAntiprime()).toThrow(new RangeError("1 is the smallest antiprime"));
     expect(ap.isAntiprime()).toBe(true);
     expect(ap.getFactors()).toEqual([1]);
-    expect(ap.getPrimeFactors()).toEqual([{ factor: 2, exponent: 0 }]);
+    expect(ap.getPrimeFactors()).toEqual([]);
+  });
+
+  it("returns copies that callers can change safely", () => {
+    const ap = new Antiprime(12);
+    ap.getFactors().reverse();
+    const primeFactors = ap.getPrimeFactors();
+    primeFactors[0] = { factor: 7, exponent: 7 };
+    primeFactors.pop();
+    const [first] = ap.getPrimeFactors();
+    if (first) first.exponent = 99;
+    expect(ap.getFactors()).toEqual([1, 2, 3, 4, 6, 12]);
+    expect(ap.getPrimeFactors()).toEqual([
+      { factor: 2, exponent: 2 },
+      { factor: 3, exponent: 1 },
+    ]);
   });
 
   it("handles an antiprime via the highly composite aliases (36)", () => {
@@ -79,7 +94,7 @@ describe("Antiprime", () => {
     expect(() => new Antiprime("a" as unknown as number)).toThrow(TypeError);
   });
 
-  it.each([10.5, 0])("throws for %d", (n) => {
-    expect(() => new Antiprime(n)).toThrow();
+  it.each([10.5, 0, NaN, Infinity, 2 ** 53])("throws RangeError for %d", (n) => {
+    expect(() => new Antiprime(n)).toThrow(RangeError);
   });
 });

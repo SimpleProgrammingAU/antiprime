@@ -12,10 +12,17 @@ describe("isAntiprime", () => {
 
   it("uses precomputed prime factors", () => {
     expect(isAntiprime(12, primeFactors(12))).toBe(true);
+    expect(isAntiprime(-12, primeFactors(12))).toBe(true);
+    expect(isAntiprime(1, [])).toBe(true);
   });
 
-  it.each([0, 100.1])("throws for %d", (n) => {
-    expect(() => isAntiprime(n)).toThrow();
+  it.each([0, 0.5, 1.5, -1.5, 100.1, NaN, Infinity, 2 ** 53])("throws RangeError for %d", (n) => {
+    expect(() => isAntiprime(n)).toThrow(RangeError);
+  });
+
+  it("throws RangeError when the prime factors do not belong to n", () => {
+    expect(() => isAntiprime(10, primeFactors(12))).toThrow(RangeError);
+    expect(() => isAntiprime(4, [{ factor: 4, exponent: 1 }])).toThrow(RangeError);
   });
 
   it.each(["abc", "1"])("throws TypeError for the string %j", (n) => {

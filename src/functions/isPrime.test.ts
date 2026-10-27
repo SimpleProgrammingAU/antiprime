@@ -10,6 +10,10 @@ describe("isPrime", () => {
     expect(isPrime(n)).toBe(false);
   });
 
+  it.each([NaN, Infinity, -Infinity, 2 ** 53, -(2 ** 53)])("throws RangeError for %d", (n) => {
+    expect(() => isPrime(n)).toThrow(RangeError);
+  });
+
   it.each(["abc", "1"])("throws TypeError for the string %j", (n) => {
     expect(() => isPrime(n as unknown as number)).toThrow(TypeError);
   });

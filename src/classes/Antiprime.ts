@@ -1,5 +1,6 @@
 import { factors, isAntiprime, primeFactors } from "../functions";
 import type { PrimeFactor } from "../interfaces";
+import { assertNonZeroSafeInteger } from "../internal/assertNumber";
 
 /**
  * The class representation of numbers and their antiprime (highly composite) status.
@@ -18,11 +19,11 @@ export class Antiprime {
    * @param n the input number; note: this number is not necessarily highly composite.
    */
   constructor(n: number) {
-    if (n < 0) n *= -1;
-    this._value = n;
-    this._isAntiprime = isAntiprime(n);
-    this._factors = factors(n);
-    this._primeFactors = primeFactors(n);
+    assertNonZeroSafeInteger(n);
+    this._value = Math.abs(n);
+    this._isAntiprime = isAntiprime(this._value);
+    this._factors = factors(this._value);
+    this._primeFactors = primeFactors(this._value);
   }
 
   get value(): number {
@@ -33,8 +34,9 @@ export class Antiprime {
    * Creates a new Antiprime object that represents the next antiprime smaller than the current Antiprime object.
    */
   previousAntiprime(): Antiprime {
+    if (this._value === 1) throw new RangeError("1 is the smallest antiprime");
     let nextVal = this._value - 1;
-    while (!isAntiprime(nextVal) && nextVal > 0) nextVal--;
+    while (!isAntiprime(nextVal)) nextVal--;
     return new Antiprime(nextVal);
   }
 
@@ -79,13 +81,13 @@ export class Antiprime {
    * Returns all of the factors associated with the current Antiprime object.
    */
   getFactors(): number[] {
-    return this._factors;
+    return [...this._factors];
   }
 
   /**
    * Returns all of the prime factors and their exponents.
    */
   getPrimeFactors(): PrimeFactor[] {
-    return this._primeFactors;
+    return this._primeFactors.map((primeFactor) => ({ ...primeFactor }));
   }
 }

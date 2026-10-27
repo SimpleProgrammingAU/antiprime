@@ -1,3 +1,4 @@
+import { assertSafeNumber } from "../internal/assertNumber";
 import { isPrime } from "./isPrime";
 
 /**
@@ -7,11 +8,11 @@ import { isPrime } from "./isPrime";
  * @throws `TypeError` if the input is not a number
  */
 export function nextPrime(n: number): number {
-  if (typeof n !== "number") throw new TypeError("input must be a number");
-  if (n < 0) n *= -1;
-  if (n % 1 !== 0) n = Math.floor(n);
+  assertSafeNumber(n);
+  n = Math.floor(Math.abs(n));
   if (n < 2) return 2;
-  n += n % 2 === 0 ? 1 : 2;
-  while (!isPrime(n)) n += 2;
-  return n;
+  for (n += n % 2 === 0 ? 1 : 2; n <= Number.MAX_SAFE_INTEGER; n += 2) {
+    if (isPrime(n)) return n;
+  }
+  throw new RangeError("The next prime is larger than Number.MAX_SAFE_INTEGER");
 }

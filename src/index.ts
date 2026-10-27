@@ -13,3 +13,6 @@ export {
   nextPrime,
   primeFactors,
 } from "./functions";
+
+/* Type exports */
+export type { PrimeFactor } from "./interfaces";

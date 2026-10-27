@@ -3,8 +3,8 @@ import { primeFactors } from ".";
 
 describe("primeFactors", () => {
   it.each([
-    [1, [{ factor: 2, exponent: 0 }]],
-    [-1, [{ factor: 2, exponent: 0 }]],
+    [1, []],
+    [-1, []],
     [2, [{ factor: 2, exponent: 1 }]],
     [3, [{ factor: 3, exponent: 1 }]],
     [4, [{ factor: 2, exponent: 2 }]],
@@ -44,11 +44,7 @@ describe("primeFactors", () => {
     expect(primeFactors(n)).toEqual(expected);
   });
 
-  it("throws TypeError for zero", () => {
-    expect(() => primeFactors(0)).toThrow(TypeError);
-  });
-
-  it.each([12.1, -12.1])("throws RangeError for the non-integer %d", (n) => {
+  it.each([0, 12.1, -12.1, NaN, Infinity, 2 ** 53])("throws RangeError for %d", (n) => {
     expect(() => primeFactors(n)).toThrow(RangeError);
   });
 
