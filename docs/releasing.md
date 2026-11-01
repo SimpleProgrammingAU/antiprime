@@ -30,11 +30,3 @@ A new trusted publisher expires unless its first publish succeeds within 2 days,
 3. [Draft a new release](https://github.com/SimpleProgrammingAU/antiprime/releases/new) with a new tag `vX.Y.Z` matching `package.json`, and publish it.
 4. The release workflow checks the tag, runs every check, stages the version on npm and deploys the API docs.
 5. On npmjs.com, open the package's **Staged Packages** tab and approve the version with 2FA. From a terminal, `npm stage list antiprime` shows the stage ID for `npm stage approve <stage-id>`.
-
-## After 2.0.0 only
-
-Once 2.0.0 is approved and live on npm, deprecate the 1.x releases:
-
-```sh
-npm deprecate antiprime@"<2.0.0" "Upgrade to 2.x: 1.x has known correctness bugs"
-```
