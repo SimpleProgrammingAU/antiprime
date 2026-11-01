@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased
+
+### Changed
+
+- The npm package is smaller: the download drops from 18.0 kB to 7.7 kB.
+  - Source maps are no longer included.
+  - The JavaScript no longer carries TSDoc comments. The type declarations keep them, so editors still show the documentation.
+
 ## 2.0.0
 
 ### Breaking changes
