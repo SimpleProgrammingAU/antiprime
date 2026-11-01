@@ -16,7 +16,7 @@ env:
 
 jobs:
   publish:
-    name: Publish to npm
+    name: Stage on npm
     runs-on: ubuntu-latest
     environment: npm
     permissions:
@@ -44,9 +44,10 @@ jobs:
       - run: pnpm test:coverage
       - run: pnpm build
       - run: pnpm docs:build
-      # Trusted publishing (OIDC) needs npm 11.5.1 or later; no NPM_TOKEN is stored.
+      # Trusted publishing (OIDC) stages the release; a maintainer approves it on npmjs.com with 2FA.
+      # Staged publishing needs npm 11.15.0 or later; no NPM_TOKEN is stored.
       - run: npm install --global npm@latest
-      - run: npm publish --provenance --access public --ignore-scripts
+      - run: npm stage publish --provenance --access public --ignore-scripts
 
   docs:
     name: Deploy API docs
