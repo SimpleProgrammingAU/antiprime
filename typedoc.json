@@ -1,0 +1,10 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "name": "antiprime",
+  "entryPoints": ["src/index.ts"],
+  "out": "api-docs",
+  "readme": "none",
+  "excludePrivate": true,
+  "treatWarningsAsErrors": true,
+  "validation": { "notExported": true, "invalidLink": true, "notDocumented": true }
+}

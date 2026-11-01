@@ -1,30 +1,33 @@
-import { PrimeFactor } from "../interfaces";
-import { isPrime } from ".";
+import type { PrimeFactor } from "../interfaces";
+import { assertNonZeroSafeInteger } from "../internal/assertNumber";
 
 /**
- * Finds all prime factors and their exponents for a given input number
- * @param n the input number to find the prime factors
- * @returns an array of PrimeFactors with value and exponent
- * @throws `RangeError` when the input is not an integer value not equal to zero
- * @throws `TypeError` when the input is not an number value
+ * Finds the prime factorisation of a number.
+ * @remarks
+ * Negative numbers are judged by their absolute value. The prime factorisation of 1 is empty.
+ * @param n - A non-zero safe integer.
+ * @returns The prime factors of `n` in ascending order, each with an exponent of at least 1.
+ * @throws `TypeError` If `n` is not a number.
+ * @throws `RangeError` If `n` is zero, not an integer, or outside the safe integer range.
+ * @since 1.0.0
+ * @example
+ * ```ts
+ * primeFactors(360); // [{ factor: 2, exponent: 3 }, { factor: 3, exponent: 2 }, { factor: 5, exponent: 1 }]
+ * primeFactors(1); // []
+ * ```
  */
-const primeFactors = (n: number): PrimeFactor[] => {
-  if (typeof n !== "number" || n === 0) throw new TypeError("Input number must be an integer not equal to zero.");
-  if (n % 1 !== 0) throw new RangeError("Input number must be an integer.");
-  if (n < 0) n *= -1;
-  if (n === 1) return [{ factor: 2, exponent: 0 }];
-  if (isPrime(n)) return [{ factor: n, exponent: 1}];
-  const primes: PrimeFactor[] = [];
-  for (let i = 2; i <= n; i++) {
-    if (n % i === 0) {
-      primes.push({ factor: i, exponent: 0 });
+export function primeFactors(n: number): PrimeFactor[] {
+  assertNonZeroSafeInteger(n);
+  n = Math.abs(n);
+  const result: PrimeFactor[] = [];
+  for (let factor = 2; factor * factor <= n; factor += factor === 2 ? 1 : 2) {
+    let exponent = 0;
+    while (n % factor === 0) {
+      n /= factor;
+      exponent++;
     }
-    while (n > 1 && n % i === 0) {
-      primes[primes.length - 1].exponent++;
-      n /= i;
-    }
+    if (exponent > 0) result.push({ factor, exponent });
   }
-  return primes;
-};
-
-export default primeFactors;
+  if (n > 1) result.push({ factor: n, exponent: 1 });
+  return result;
+}

@@ -1,9 +1,8 @@
-export { default as factors } from "./factors";
-export { default as isAntiprime } from "./isAntiprime";
-export { default as isAntiprimeCandidate } from "./isAntiprimeCandidate";
-export { default as isConsecutivePrimeFactors } from "./isConsecutivePrimeFactors";
-export { default as isHighlyComposite } from "./isAntiprime";
-export { default as isPrime } from "./isPrime";
-export { default as isPrimeExponentsReducing } from "./isPrimeExponentsReducing";
-export { default as nextPrime } from "./nextPrime";
-export { default as primeFactors } from "./primeFactors";
+export { factors } from "./factors";
+export { isAntiprime, isAntiprime as isHighlyComposite } from "./isAntiprime";
+export { isAntiprimeCandidate } from "./isAntiprimeCandidate";
+export { isConsecutivePrimeFactors } from "./isConsecutivePrimeFactors";
+export { isPrime } from "./isPrime";
+export { isPrimeExponentsReducing } from "./isPrimeExponentsReducing";
+export { nextPrime } from "./nextPrime";
+export { primeFactors } from "./primeFactors";

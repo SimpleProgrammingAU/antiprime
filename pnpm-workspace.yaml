@@ -1,0 +1,9 @@
+# lefthook installs its git hooks through the `prepare` script instead of a postinstall script.
+allowBuilds:
+  lefthook: false
+
+minimumReleaseAge: 1440
+
+overrides:
+  # eslint-plugin-tsdoc pins a typescript-eslint release that predates TypeScript 6.
+  "eslint-plugin-tsdoc>@typescript-eslint/utils": "^8.72.0"

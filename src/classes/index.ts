@@ -1,2 +1,1 @@
-export { default as Antiprime } from './Antiprime';
-export { default as HighlyCompositeNumber } from './Antiprime';
+export { Antiprime, Antiprime as HighlyCompositeNumber } from "./Antiprime";
