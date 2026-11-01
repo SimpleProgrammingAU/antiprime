@@ -24,6 +24,8 @@ jobs:
       id-token: write
     steps:
       - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
       - name: Check the release tag matches package.json
         run: |
           version="$(node -p 'require("./package.json").version')"
@@ -35,9 +37,9 @@ jobs:
       - uses: actions/setup-node@v7
         with:
           node-version: 24
-          cache: pnpm
           registry-url: https://registry.npmjs.org
-      - run: pnpm install --frozen-lockfile
+          package-manager-cache: false # never restore a cache into a job that can publish
+      - run: pnpm install --frozen-lockfile --ignore-scripts
       - run: pnpm format:check
       - run: pnpm lint
       - run: pnpm typecheck
@@ -45,8 +47,8 @@ jobs:
       - run: pnpm build
       - run: pnpm docs:build
       # Trusted publishing (OIDC) stages the release; a maintainer approves it on npmjs.com with 2FA.
-      # Staged publishing needs npm 11.15.0 or later; no NPM_TOKEN is stored.
-      - run: npm install --global npm@latest
+      # Staged publishing needs npm 11.15.0 or later, which Node 24 bundles; no NPM_TOKEN is stored.
+      # --ignore-scripts skips prepublishOnly, so the build that was just checked is the one staged.
       - run: npm stage publish --provenance --access public --ignore-scripts
 
   docs:
@@ -61,12 +63,14 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
       - uses: pnpm/action-setup@v6
       - uses: actions/setup-node@v7
         with:
           node-version: 24
-          cache: pnpm
-      - run: pnpm install --frozen-lockfile
+          package-manager-cache: false # never restore a cache into a job that can deploy
+      - run: pnpm install --frozen-lockfile --ignore-scripts
       - run: pnpm docs:build
       - uses: actions/configure-pages@v6
       - uses: actions/upload-pages-artifact@v5
