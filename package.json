@@ -1,6 +1,6 @@
 {
   "name": "antiprime",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Because sometimes we need highly composite numbers",
   "type": "module",
   "files": [
