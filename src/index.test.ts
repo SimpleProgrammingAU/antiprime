@@ -14,6 +14,8 @@ describe("public API", () => {
       "isHighlyComposite",
       "isPrime",
       "isPrimeExponentsReducing",
+      "isSuperiorAntiprime",
+      "isSuperiorHighlyComposite",
       "nextPrime",
       "primeFactors",
     ]);
@@ -22,6 +24,7 @@ describe("public API", () => {
   it("exports the highly composite names as aliases", () => {
     expect(antiprime.HighlyCompositeNumber).toBe(antiprime.Antiprime);
     expect(antiprime.isHighlyComposite).toBe(antiprime.isAntiprime);
+    expect(antiprime.isSuperiorHighlyComposite).toBe(antiprime.isSuperiorAntiprime);
   });
 
   it("exports the PrimeFactor type", () => {

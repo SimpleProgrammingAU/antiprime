@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { FIRST_ANTIPRIMES } from "../testing/antiprimeFixtures";
+import { FIRST_ANTIPRIMES, SUPERIOR_ANTIPRIMES } from "../testing/antiprimeFixtures";
 import { Antiprime } from ".";
 
 describe("Antiprime", () => {
@@ -31,6 +31,49 @@ describe("Antiprime", () => {
     expect(() => new Antiprime(Number.MAX_SAFE_INTEGER).nextAntiprime()).toThrow(RangeError);
   });
 
+  it("walks forwards through every superior antiprime", () => {
+    let ap = new Antiprime(1);
+    const seen: number[] = [];
+    while (seen.length < SUPERIOR_ANTIPRIMES.length) {
+      ap = ap.nextSuperiorAntiprime();
+      seen.push(ap.value);
+    }
+    expect(seen).toEqual(SUPERIOR_ANTIPRIMES);
+    expect(() => ap.nextSuperiorAntiprime()).toThrow(
+      new RangeError("The next superior antiprime is larger than Number.MAX_SAFE_INTEGER"),
+    );
+  });
+
+  it("walks backwards through every superior antiprime", () => {
+    let ap = new Antiprime(Number.MAX_SAFE_INTEGER);
+    const seen: number[] = [];
+    while (seen.length < SUPERIOR_ANTIPRIMES.length) {
+      ap = ap.previousSuperiorAntiprime();
+      seen.push(ap.value);
+    }
+    expect(seen).toEqual([...SUPERIOR_ANTIPRIMES].reverse());
+    expect(() => ap.previousSuperiorAntiprime()).toThrow(new RangeError("2 is the smallest superior antiprime"));
+  });
+
+  it("finds the last safe superior antiprime from just below it", () => {
+    expect(new Antiprime(6064949221531199).nextSuperiorAntiprime().value).toBe(6064949221531200);
+  });
+
+  it("handles an antiprime that is not superior (24)", () => {
+    const ap = new Antiprime(24);
+    expect(ap.isAntiprime()).toBe(true);
+    expect(ap.isSuperiorAntiprime()).toBe(false);
+    expect(ap.nextSuperiorAntiprime().value).toBe(60);
+    expect(ap.previousSuperiorAntiprime().value).toBe(12);
+  });
+
+  it("handles a superior antiprime via the superior highly composite aliases (60)", () => {
+    const ap = new Antiprime(60);
+    expect(ap.isSuperiorHighlyCompositeNumber()).toBe(true);
+    expect(ap.nextSuperiorHighlyCompositeNumber().value).toBe(120);
+    expect(ap.previousSuperiorHighlyCompositeNumber().value).toBe(12);
+  });
+
   it.each([
     [1, 1],
     [2, 2],
@@ -49,6 +92,9 @@ describe("Antiprime", () => {
     expect(ap.nextAntiprime().value).toBe(12);
     expect(ap.previousAntiprime().value).toBe(6);
     expect(ap.isAntiprime()).toBe(false);
+    expect(ap.nextSuperiorAntiprime().value).toBe(12);
+    expect(ap.previousSuperiorAntiprime().value).toBe(6);
+    expect(ap.isSuperiorAntiprime()).toBe(false);
     expect(ap.getFactors()).toEqual([1, 2, 5, 10]);
     expect(ap.getPrimeFactors()).toEqual([
       { factor: 2, exponent: 1 },
@@ -73,6 +119,9 @@ describe("Antiprime", () => {
     expect(ap.nextAntiprime().value).toBe(2);
     expect(() => ap.previousAntiprime()).toThrow(new RangeError("1 is the smallest antiprime"));
     expect(ap.isAntiprime()).toBe(true);
+    expect(ap.nextSuperiorAntiprime().value).toBe(2);
+    expect(() => ap.previousSuperiorAntiprime()).toThrow(new RangeError("2 is the smallest superior antiprime"));
+    expect(ap.isSuperiorAntiprime()).toBe(false);
     expect(ap.getFactors()).toEqual([1]);
     expect(ap.getPrimeFactors()).toEqual([]);
   });

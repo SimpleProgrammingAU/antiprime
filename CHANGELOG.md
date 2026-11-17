@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.1.0
+
+### Added
+
+- Superior antiprimes (superior highly composite numbers, [OEIS A002201](https://oeis.org/A002201)):
+  - The `isSuperiorAntiprime(n)` function, also exported as `isSuperiorHighlyComposite`.
+  - The `isSuperiorAntiprime()`, `nextSuperiorAntiprime()` and `previousSuperiorAntiprime()` methods on `Antiprime`, also available as `isSuperiorHighlyCompositeNumber()`, `nextSuperiorHighlyCompositeNumber()` and `previousSuperiorHighlyCompositeNumber()`.
+
 ## 2.0.1
 
 ### Changed
