@@ -20,13 +20,13 @@ function criticalEpsilon(primeExponent: PrimeExponent): number {
 /**
  * Lists every superior antiprime up to `limit`, in ascending order.
  * @remarks
- * Each superior antiprime is the one before it times a prime. As ε falls, prime p gains its k-th power at the critical
- * value ln(1 + 1/k) / ln p, so multiplying by primes in order of falling critical value gives the sequence. Only the
- * smallest prime not yet used can be the next new prime, because ln 2 / ln p falls as p grows.
+ * As ε falls, prime p gains its k-th power at the critical value ln(1 + 1/k) / ln p, so multiplying by primes in order
+ * of falling critical value reaches every superior antiprime. Only the smallest prime not yet used can be the next new
+ * prime, because ln 2 / ln p falls as p grows.
  *
- * If two critical values were equal, the true sequence would skip the number between them, but this loop would include
- * it. The Four Exponentials Conjecture rules ties out, and none occur up to `Number.MAX_SAFE_INTEGER`: the tests check
- * every value in that range against OEIS A002201.
+ * Assuming the Four Exponentials Conjecture, no two critical values are equal, so each superior antiprime is the one
+ * before it times a prime. A tie would make the true sequence skip the number between the two steps, which this loop
+ * would include. The tests check every value up to `Number.MAX_SAFE_INTEGER` against OEIS A002201.
  * @param limit - The largest value to include; at most `Number.MAX_SAFE_INTEGER`.
  * @returns The superior antiprimes.
  */

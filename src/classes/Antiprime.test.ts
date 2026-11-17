@@ -47,7 +47,7 @@ describe("Antiprime", () => {
   it("walks backwards through every superior antiprime", () => {
     let ap = new Antiprime(Number.MAX_SAFE_INTEGER);
     const seen: number[] = [];
-    while (ap.value > 2) {
+    while (seen.length < SUPERIOR_ANTIPRIMES.length) {
       ap = ap.previousSuperiorAntiprime();
       seen.push(ap.value);
     }
