@@ -199,7 +199,9 @@ export class Antiprime {
    * ```
    */
   nextSuperiorAntiprime(): Antiprime {
-    const next = superiorAntiprimesUpTo(Number.MAX_SAFE_INTEGER).find((superior) => superior > this.#value);
+    const next = superiorAntiprimesUpTo(Number.MAX_SAFE_INTEGER).find(
+      (superiorAntiprime) => superiorAntiprime > this.#value,
+    );
     if (next === undefined) throw new RangeError("The next superior antiprime is larger than Number.MAX_SAFE_INTEGER");
     return new Antiprime(next);
   }
@@ -222,8 +224,7 @@ export class Antiprime {
    * Determines whether the value is a superior antiprime.
    * @remarks
    * The first superior antiprime is 2: 1 is excluded by convention, even though it is the first antiprime.
-   * @returns `true` if, for some positive ε, the value's factor count divided by its ε-th power is at least as large as
-   * any other positive integer's; otherwise `false`.
+   * @returns `true` if the value is a superior antiprime; otherwise `false`.
    * @since 2.1.0
    * @example
    * ```ts
@@ -237,8 +238,7 @@ export class Antiprime {
 
   /**
    * Alias of {@link Antiprime.isSuperiorAntiprime}.
-   * @returns `true` if, for some positive ε, the value's factor count divided by its ε-th power is at least as large as
-   * any other positive integer's; otherwise `false`.
+   * @returns `true` if the value is a superior antiprime; otherwise `false`.
    * @since 2.1.0
    * @example
    * ```ts

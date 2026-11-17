@@ -59,20 +59,6 @@ describe("Antiprime", () => {
     expect(new Antiprime(6064949221531199).nextSuperiorAntiprime().value).toBe(6064949221531200);
   });
 
-  it("handles 1 as an antiprime that is not superior", () => {
-    const ap = new Antiprime(1);
-    expect(ap.isSuperiorAntiprime()).toBe(false);
-    expect(ap.nextSuperiorAntiprime().value).toBe(2);
-    expect(() => ap.previousSuperiorAntiprime()).toThrow(new RangeError("2 is the smallest superior antiprime"));
-  });
-
-  it("handles a negative non-antiprime between superior antiprimes (-10)", () => {
-    const ap = new Antiprime(-10);
-    expect(ap.isSuperiorAntiprime()).toBe(false);
-    expect(ap.nextSuperiorAntiprime().value).toBe(12);
-    expect(ap.previousSuperiorAntiprime().value).toBe(6);
-  });
-
   it("handles an antiprime that is not superior (24)", () => {
     const ap = new Antiprime(24);
     expect(ap.isAntiprime()).toBe(true);
@@ -106,6 +92,9 @@ describe("Antiprime", () => {
     expect(ap.nextAntiprime().value).toBe(12);
     expect(ap.previousAntiprime().value).toBe(6);
     expect(ap.isAntiprime()).toBe(false);
+    expect(ap.nextSuperiorAntiprime().value).toBe(12);
+    expect(ap.previousSuperiorAntiprime().value).toBe(6);
+    expect(ap.isSuperiorAntiprime()).toBe(false);
     expect(ap.getFactors()).toEqual([1, 2, 5, 10]);
     expect(ap.getPrimeFactors()).toEqual([
       { factor: 2, exponent: 1 },
@@ -130,6 +119,9 @@ describe("Antiprime", () => {
     expect(ap.nextAntiprime().value).toBe(2);
     expect(() => ap.previousAntiprime()).toThrow(new RangeError("1 is the smallest antiprime"));
     expect(ap.isAntiprime()).toBe(true);
+    expect(ap.nextSuperiorAntiprime().value).toBe(2);
+    expect(() => ap.previousSuperiorAntiprime()).toThrow(new RangeError("2 is the smallest superior antiprime"));
+    expect(ap.isSuperiorAntiprime()).toBe(false);
     expect(ap.getFactors()).toEqual([1]);
     expect(ap.getPrimeFactors()).toEqual([]);
   });

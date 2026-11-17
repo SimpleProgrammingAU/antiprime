@@ -22,9 +22,12 @@ describe("isSuperiorAntiprime", () => {
     },
   );
 
-  it.each([-1, 3, 10, 30, 6064949221531199, 6064949221531201, Number.MAX_SAFE_INTEGER])("%d is not superior", (n) => {
-    expect(isSuperiorAntiprime(n)).toBe(false);
-  });
+  it.each([-1, 3, 10, 30, 6064949221531199, 6064949221531201, Number.MAX_SAFE_INTEGER])(
+    "%d is not a superior antiprime",
+    (n) => {
+      expect(isSuperiorAntiprime(n)).toBe(false);
+    },
+  );
 
   it.each(SUPERIOR_ANTIPRIMES)("superior antiprime %d is an antiprime", (n) => {
     expect(isAntiprime(n)).toBe(true);
