@@ -23,10 +23,11 @@ Requires Node.js 22 or later. The package ships both ES modules and CommonJS, wi
 ## Usage
 
 ```js
-import { Antiprime, isAntiprime } from "antiprime";
+import { Antiprime, isAntiprime, isSuperiorAntiprime } from "antiprime";
 
 isAntiprime(12); // true
 isAntiprime(30); // false
+isSuperiorAntiprime(5040); // true
 
 const ap = new Antiprime(33);
 ap.isAntiprime(); // false
@@ -50,32 +51,38 @@ The [API reference](https://simpleprogrammingau.github.io/antiprime/) documents 
 
 Also exported as `HighlyCompositeNumber`. Holds the number `n` (which need not be an antiprime) and works out its properties on first use.
 
-| Member                                                    | Description                                                            |
-| --------------------------------------------------------- | ---------------------------------------------------------------------- |
-| `value`                                                   | The number held, always positive.                                      |
-| `factorCount`                                             | How many factors `value` has.                                          |
-| `isAntiprime()` / `isHighlyCompositeNumber()`             | Whether `value` is an antiprime.                                       |
-| `nextAntiprime()` / `nextHighlyCompositeNumber()`         | A new instance holding the smallest antiprime larger than `value`.     |
-| `previousAntiprime()` / `previousHighlyCompositeNumber()` | A new instance holding the largest antiprime smaller than `value`.     |
-| `getFactors()`                                            | Every factor of `value`, ascending.                                    |
-| `getPrimeFactors()`                                       | The prime factorisation of `value`, as `{ factor, exponent }` objects. |
+| Member                                                                    | Description                                                                 |
+| ------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| `value`                                                                   | The number held, always positive.                                           |
+| `factorCount`                                                             | How many factors `value` has.                                               |
+| `isAntiprime()` / `isHighlyCompositeNumber()`                             | Whether `value` is an antiprime.                                            |
+| `nextAntiprime()` / `nextHighlyCompositeNumber()`                         | A new instance holding the smallest antiprime larger than `value`.          |
+| `previousAntiprime()` / `previousHighlyCompositeNumber()`                 | A new instance holding the largest antiprime smaller than `value`.          |
+| `isSuperiorAntiprime()` / `isSuperiorHighlyCompositeNumber()`             | Whether `value` is a superior antiprime.                                    |
+| `nextSuperiorAntiprime()` / `nextSuperiorHighlyCompositeNumber()`         | A new instance holding the smallest superior antiprime larger than `value`. |
+| `previousSuperiorAntiprime()` / `previousSuperiorHighlyCompositeNumber()` | A new instance holding the largest superior antiprime smaller than `value`. |
+| `getFactors()`                                                            | Every factor of `value`, ascending.                                         |
+| `getPrimeFactors()`                                                       | The prime factorisation of `value`, as `{ factor, exponent }` objects.      |
 
 ### Functions
 
-| Function                                            | Description                                                                               |
-| --------------------------------------------------- | ----------------------------------------------------------------------------------------- |
-| `isAntiprime(n, pf?)` / `isHighlyComposite(n, pf?)` | Whether `n` is an antiprime.                                                              |
-| `isAntiprimeCandidate(n, pf?)`                      | Whether `n` passes the tests every antiprime passes (see below).                          |
-| `factors(n)`                                        | Every factor of `n`, ascending.                                                           |
-| `primeFactors(n)`                                   | The prime factorisation of `n` as `{ factor, exponent }` objects, ascending. Empty for 1. |
-| `isPrime(n)`                                        | Whether `n` is prime.                                                                     |
-| `nextPrime(n)`                                      | The smallest prime larger than `n`.                                                       |
-| `isConsecutivePrimeFactors(pf)`                     | Whether the prime factorisation `pf` uses exactly the first _k_ primes.                   |
-| `isPrimeExponentsReducing(pf)`                      | Whether the exponents in `pf` never increase from smaller to larger primes.               |
+| Function                                                  | Description                                                                               |
+| --------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| `isAntiprime(n, pf?)` / `isHighlyComposite(n, pf?)`       | Whether `n` is an antiprime.                                                              |
+| `isAntiprimeCandidate(n, pf?)`                            | Whether `n` passes the tests every antiprime passes (see below).                          |
+| `isSuperiorAntiprime(n)` / `isSuperiorHighlyComposite(n)` | Whether `n` is a superior antiprime (see below).                                          |
+| `factors(n)`                                              | Every factor of `n`, ascending.                                                           |
+| `primeFactors(n)`                                         | The prime factorisation of `n` as `{ factor, exponent }` objects, ascending. Empty for 1. |
+| `isPrime(n)`                                              | Whether `n` is prime.                                                                     |
+| `nextPrime(n)`                                            | The smallest prime larger than `n`.                                                       |
+| `isConsecutivePrimeFactors(pf)`                           | Whether the prime factorisation `pf` uses exactly the first _k_ primes.                   |
+| `isPrimeExponentsReducing(pf)`                            | Whether the exponents in `pf` never increase from smaller to larger primes.               |
 
 The optional `pf` argument is the prime factorisation of `n`, if you already have it. It is checked against `n`.
 
 An **antiprime candidate** is a number whose prime factors are the first _k_ primes, whose exponents never increase, and whose largest prime factor has an exponent of 1 (4 and 36 are the only exceptions). Every antiprime is a candidate, but not every candidate is an antiprime.
+
+A **superior antiprime** (or [superior highly composite number](https://en.wikipedia.org/wiki/Superior_highly_composite_number)) is a positive integer _n_ for which some ε > 0 makes the factor count of _n_ divided by _n_<sup>ε</sup> at least as large as for any other positive integer: 2, 6, 12, 60, 120, 360, 2520, 5040, … Every superior antiprime is an antiprime. 1 is the first antiprime, but by convention it is not a superior antiprime, so the first is 2.
 
 The `PrimeFactor` type is exported for TypeScript users.
 
@@ -83,7 +90,7 @@ The `PrimeFactor` type is exported for TypeScript users.
 
 - **Negative numbers are judged by their absolute value.** `isAntiprime(-12)` is `true`, and `new Antiprime(-12).value` is `12`.
 - **Numbers must be within the safe integer range** (up to `Number.MAX_SAFE_INTEGER`, 2⁵³ − 1).
-- Functions that factorise (`factors`, `primeFactors`, `isAntiprime`, `isAntiprimeCandidate` and the `Antiprime` constructor) need a non-zero integer. `isPrime` and `nextPrime` also accept non-integers: `isPrime(10.5)` is `false` and `nextPrime(10.5)` is `11`.
+- `factors`, `primeFactors`, `isAntiprime`, `isAntiprimeCandidate`, `isSuperiorAntiprime` and the `Antiprime` constructor need a non-zero integer. `isPrime` and `nextPrime` also accept non-integers: `isPrime(10.5)` is `false` and `nextPrime(10.5)` is `11`.
 - Invalid input throws a `TypeError` (not a number, or not an array of prime factors) or a `RangeError` (zero, a non-integer, NaN, infinite, outside the safe range, or a prime factorisation that is invalid or does not belong to `n`).
 
 ## Migrating from 1.x

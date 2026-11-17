@@ -1,6 +1,6 @@
 /**
  * Test and find antiprimes (highly composite numbers): positive integers with more factors than any smaller positive
- * integer.
+ * integer. Also test and find superior antiprimes (superior highly composite numbers), a rarer subset of the antiprimes.
  * @remarks
  * Every function and the {@link Antiprime} class judge a negative number by its absolute value, so `isAntiprime(-12)`
  * is `true`. Inputs must be within the safe integer range (up to `Number.MAX_SAFE_INTEGER`).
@@ -19,6 +19,8 @@ export {
   isConsecutivePrimeFactors,
   isPrime,
   isPrimeExponentsReducing,
+  isSuperiorAntiprime,
+  isSuperiorHighlyComposite,
   nextPrime,
   primeFactors,
 } from "./functions";

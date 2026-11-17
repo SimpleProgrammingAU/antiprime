@@ -1,15 +1,17 @@
-import { factors, isAntiprime, primeFactors } from "../functions";
+import { factors, isAntiprime, isSuperiorAntiprime, primeFactors } from "../functions";
 import type { PrimeFactor } from "../interfaces";
 import { antiprimesUpTo } from "../internal/antiprimes";
 import { assertNonZeroSafeInteger } from "../internal/assertNumber";
 import { factorCount } from "../internal/factorCount";
+import { superiorAntiprimesUpTo } from "../internal/superiorAntiprimes";
 
 /**
- * A non-zero integer together with its antiprime status, factors and prime factorisation.
+ * A non-zero integer together with its antiprime and superior antiprime status, factors and prime factorisation.
  * @remarks
  * Also exported as `HighlyCompositeNumber`. Despite the name, an instance can hold any non-zero safe integer: use
  * {@link Antiprime.isAntiprime} to check whether its value is an antiprime. The instances returned by
- * {@link Antiprime.nextAntiprime} and {@link Antiprime.previousAntiprime} always hold antiprimes.
+ * {@link Antiprime.nextAntiprime}, {@link Antiprime.previousAntiprime}, {@link Antiprime.nextSuperiorAntiprime} and
+ * {@link Antiprime.previousSuperiorAntiprime} always hold antiprimes.
  *
  * Negative numbers are judged by their absolute value. Everything except the value is worked out on first use and cached.
  * @since 1.0.0
@@ -25,6 +27,7 @@ export class Antiprime {
   #factors: number[] | undefined;
   #primeFactors: PrimeFactor[] | undefined;
   #isAntiprime: boolean | undefined;
+  #isSuperiorAntiprime: boolean | undefined;
 
   /**
    * Creates an instance holding the absolute value of `n`, which need not be an antiprime.
@@ -151,6 +154,99 @@ export class Antiprime {
    */
   isHighlyCompositeNumber(): boolean {
     return this.isAntiprime();
+  }
+
+  /**
+   * Finds the largest superior antiprime smaller than the value.
+   * @returns A new instance holding the previous superior antiprime.
+   * @throws `RangeError` If the value is 1 or 2, since 2 is the smallest superior antiprime.
+   * @since 2.1.0
+   * @example
+   * ```ts
+   * new Antiprime(5040).previousSuperiorAntiprime().value; // 2520
+   * new Antiprime(100).previousSuperiorAntiprime().value; // 60
+   * ```
+   */
+  previousSuperiorAntiprime(): Antiprime {
+    const previous = superiorAntiprimesUpTo(this.#value - 1).at(-1);
+    if (previous === undefined) throw new RangeError("2 is the smallest superior antiprime");
+    return new Antiprime(previous);
+  }
+
+  /**
+   * Alias of {@link Antiprime.previousSuperiorAntiprime}.
+   * @returns A new instance holding the previous superior antiprime.
+   * @throws `RangeError` If the value is 1 or 2, since 2 is the smallest superior antiprime.
+   * @since 2.1.0
+   * @example
+   * ```ts
+   * new HighlyCompositeNumber(5040).previousSuperiorHighlyCompositeNumber().value; // 2520
+   * ```
+   */
+  previousSuperiorHighlyCompositeNumber(): Antiprime {
+    return this.previousSuperiorAntiprime();
+  }
+
+  /**
+   * Finds the smallest superior antiprime larger than the value.
+   * @returns A new instance holding the next superior antiprime.
+   * @throws `RangeError` If the next superior antiprime is larger than `Number.MAX_SAFE_INTEGER`.
+   * @since 2.1.0
+   * @example
+   * ```ts
+   * new Antiprime(1).nextSuperiorAntiprime().value; // 2
+   * new Antiprime(5040).nextSuperiorAntiprime().value; // 55440
+   * ```
+   */
+  nextSuperiorAntiprime(): Antiprime {
+    const next = superiorAntiprimesUpTo(Number.MAX_SAFE_INTEGER).find((superior) => superior > this.#value);
+    if (next === undefined) throw new RangeError("The next superior antiprime is larger than Number.MAX_SAFE_INTEGER");
+    return new Antiprime(next);
+  }
+
+  /**
+   * Alias of {@link Antiprime.nextSuperiorAntiprime}.
+   * @returns A new instance holding the next superior antiprime.
+   * @throws `RangeError` If the next superior antiprime is larger than `Number.MAX_SAFE_INTEGER`.
+   * @since 2.1.0
+   * @example
+   * ```ts
+   * new HighlyCompositeNumber(5040).nextSuperiorHighlyCompositeNumber().value; // 55440
+   * ```
+   */
+  nextSuperiorHighlyCompositeNumber(): Antiprime {
+    return this.nextSuperiorAntiprime();
+  }
+
+  /**
+   * Determines whether the value is a superior antiprime.
+   * @remarks
+   * The first superior antiprime is 2: 1 is excluded by convention, even though it is the first antiprime.
+   * @returns `true` if, for some positive ε, the value's factor count divided by its ε-th power is at least as large as
+   * any other positive integer's; otherwise `false`.
+   * @since 2.1.0
+   * @example
+   * ```ts
+   * new Antiprime(60).isSuperiorAntiprime(); // true
+   * new Antiprime(24).isSuperiorAntiprime(); // false, though 24 is an antiprime
+   * ```
+   */
+  isSuperiorAntiprime(): boolean {
+    return (this.#isSuperiorAntiprime ??= isSuperiorAntiprime(this.#value));
+  }
+
+  /**
+   * Alias of {@link Antiprime.isSuperiorAntiprime}.
+   * @returns `true` if, for some positive ε, the value's factor count divided by its ε-th power is at least as large as
+   * any other positive integer's; otherwise `false`.
+   * @since 2.1.0
+   * @example
+   * ```ts
+   * new HighlyCompositeNumber(60).isSuperiorHighlyCompositeNumber(); // true
+   * ```
+   */
+  isSuperiorHighlyCompositeNumber(): boolean {
+    return this.isSuperiorAntiprime();
   }
 
   /**

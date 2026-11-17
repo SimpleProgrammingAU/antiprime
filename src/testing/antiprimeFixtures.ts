@@ -5,6 +5,12 @@ export const FIRST_ANTIPRIMES: readonly number[] = [
   1081080, 1441440, 2162160,
 ];
 
+/** Every superior antiprime up to `Number.MAX_SAFE_INTEGER` (the first 21), from OEIS A002201. */
+export const SUPERIOR_ANTIPRIMES: readonly number[] = [
+  2, 6, 12, 60, 120, 360, 2520, 5040, 55440, 720720, 1441440, 4324320, 21621600, 367567200, 6983776800, 13967553600,
+  321253732800, 2248776129600, 65214507758400, 195643523275200, 6064949221531200,
+];
+
 /**
  * Counts the factors of every integer from 0 to `limit` by brute force, as an oracle for the fast algorithms.
  * @param limit - The largest integer to count factors for.
